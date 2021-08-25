@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
+    [Header("Components")]
+    public List<GemController> selectedGems = new List<GemController>();
+
     // Start is called before the first frame update
     void Start()
     {
