@@ -13,7 +13,7 @@ public class GemController : MonoBehaviour
 
     [Header("Stats")]
     [SerializeField] private int points;
-    //[SerializeField] private Color color;
+    [SerializeField] private Color color;
     [SerializeField] private GemSO.EType type;
 
     [SerializeField] Vector2 initialPosition;
@@ -23,11 +23,6 @@ public class GemController : MonoBehaviour
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-    }
-
-    private void Start()
-    {
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -42,6 +37,7 @@ public class GemController : MonoBehaviour
     private void OnMouseDown()
     {
         initialPosition = transform.position;
+
         //Check if there are any elements in list
         if (playerManager.selectedGems.Count > 0 )
         {
@@ -58,6 +54,7 @@ public class GemController : MonoBehaviour
             //if there are not any elements, add this one
             Debug.Log("Add new");
             playerManager.selectedGems.Add(this);
+            CheckColors();
         }
     }
 
@@ -67,9 +64,10 @@ public class GemController : MonoBehaviour
     public void UpdateGemStats()
     {
         points = gemStats.GetPoints;
-        type = gemStats.GetEType();
+        type = gemStats.GetEType;
+        color = gemStats.GetColor;
 
-        spriteRenderer.color = gemStats.GetColor();
+        spriteRenderer.color = color;
     }
 
     //Swap positions of two selected gems
@@ -94,7 +92,33 @@ public class GemController : MonoBehaviour
             //add swapped gem to list
             otherGem.sideGems.Add(this);
         }
+        playerManager.selectedGems.Clear();
+    }
 
+    //Check side gem colors
+    void CheckColors()
+    {
+        //For each gem in side gems...
+        foreach (GemController sideGem in sideGems)
+        {
+            ////...check if their color equals this gem
+            if (sideGem.color.Equals(this.color))
+            {
+                Destroy(gameObject);
+            }
+        }
+    }
+
+    private void OnDestroy()
+    {
+        playerManager.AddPointsToPlayer(points);
+
+        foreach (GemController sideGem in sideGems)
+        {
+            if (sideGem.color.Equals(this.color))
+                Destroy(sideGem.gameObject);
+            sideGem.sideGems.Remove(this);
+        }
         playerManager.selectedGems.Clear();
     }
 }

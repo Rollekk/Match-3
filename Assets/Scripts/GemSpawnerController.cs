@@ -10,7 +10,8 @@ public class GemSpawnerController : MonoBehaviour
     public PlayerManager playerManager; 
 
     [Header("Gem")]
-    [SerializeField] GemSO[] gemStatsArray = null; //Array of scriptableobjects with gem stats
+    [SerializeField] GemSO[] normalGemsArray = null; //Array of scriptableobjects with normal Gem
+    [SerializeField] GemSO[] specialGemsArray = null; //Array of scriptableobjects with special Gems
     public float gemSpacing = 1.5f; //Spacing between gems
     
     // Start is called before the first frame update
@@ -33,8 +34,10 @@ public class GemSpawnerController : MonoBehaviour
 
         //set newGem transform to new parent
         newGem.transform.parent = gemParent.transform;
+
         //get random GemSO from array of ScriptableObjects
-        newGem.gemStats = gemStatsArray[(int)Random.Range(0, gemStatsArray.Length)];
+        newGem.gemStats = GetRandomStats();
+
         //set newGem manager to spawners manager
         newGem.playerManager = this.playerManager;
         //update gem stats
@@ -51,11 +54,22 @@ public class GemSpawnerController : MonoBehaviour
         //set newGem transform to new parent
         newGem.transform.parent = gemParent.transform;
         //get random GemSO from array of ScriptableObjects
-        newGem.gemStats = gemStatsArray[(int)Random.Range(0, gemStatsArray.Length)];
+        newGem.gemStats = GetRandomStats();
         //set newGem manager to spawners manager
         newGem.playerManager = this.playerManager;
         //update gem stats
         newGem.UpdateGemStats();
     }
 
+    //Get random GemSO from array of ScriptableObjects
+    //returns random GemSO
+    GemSO GetRandomStats()
+    {
+        //random probability of getting special gem
+        float randomProb = Random.Range(0f, 100f);
+
+        //check probability, return normal or special gem
+        if (randomProb <= 95f) return normalGemsArray[(int)Random.Range(0, normalGemsArray.Length)];
+        else return specialGemsArray[(int)Random.Range(0, specialGemsArray.Length)];
+    }
 }

@@ -704,11 +704,14 @@ MonoBehaviour:
   gemGO: {fileID: 3962369188214406136, guid: 966d93f9215fa884daf5ffef635bc936, type: 3}
   gemParent: {fileID: 1361304279}
   playerManager: {fileID: 1290013026}
-  gemStatsArray:
+  normalGemsArray:
   - {fileID: 11400000, guid: b7b97cbbeb42c7c43ab17a14db952f43, type: 2}
+  - {fileID: 11400000, guid: ca8c8356acbf50f409f8cb215d085cd5, type: 2}
   - {fileID: 11400000, guid: 6bc0a89158269144386a7c9f910f2732, type: 2}
   - {fileID: 11400000, guid: 19f4e8a3e3dcbd34fb55df69c184b6af, type: 2}
-  - {fileID: 11400000, guid: ca8c8356acbf50f409f8cb215d085cd5, type: 2}
+  specialGemsArray:
+  - {fileID: 11400000, guid: 1b8a2679fa4db0c44b9cd88728dae5de, type: 2}
+  - {fileID: 11400000, guid: 7d5d713a0ed6339419d674b055369310, type: 2}
   gemSpacing: 1.5
 --- !u!50 &1497626823
 Rigidbody2D:
