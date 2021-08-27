@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 24041e1d4ef46b54eb4dc29c54c2bcb6, type: 3}
-  m_Name: Pink
+  m_Name: Apple
   m_EditorClassIdentifier: 
-  gemPoints: 100
+  gemPoints: 10
   gemType: 0
-  gemColor: {r: 0.83137256, g: 0, b: 0.44162187, a: 1}
+  gemColor: {r: 1, g: 0, b: 0.04321146, a: 1}
+  gemSprite: {fileID: 21300000, guid: 4b58545bbf150194a9ad84987a0a6b85, type: 3}

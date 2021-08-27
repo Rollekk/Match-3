@@ -49,7 +49,7 @@ public class GemSpawnerController : MonoBehaviour
     void CreateNewGem(Vector3 removedGemPosition)
     {
         //create new gem with given position and get its controller
-        GemController newGem = Instantiate(gemGO, new Vector3(removedGemPosition.x, transform.position.y, removedGemPosition.z), gemGO.transform.rotation).GetComponent<GemController>();
+        GemController newGem = Instantiate(gemGO, new Vector3(removedGemPosition.x, transform.position.y, removedGemPosition.z), gemGO.transform.rotation).GetComponentInChildren<GemController>();
 
         //set newGem transform to new parent
         newGem.transform.parent = gemParent.transform;
