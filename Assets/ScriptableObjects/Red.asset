@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Red
   m_EditorClassIdentifier: 
   gemPoints: 100
+  gemType: 0
   gemColor: {r: 1, g: 0, b: 0.04321146, a: 1}
-  gemType: 1

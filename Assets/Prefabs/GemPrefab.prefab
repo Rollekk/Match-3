@@ -104,6 +104,7 @@ MonoBehaviour:
   points: 0
   color: {r: 0, g: 0, b: 0, a: 0}
   type: 0
+  initialPosition: {x: 0, y: 0}
 --- !u!50 &3962369188214406138
 Rigidbody2D:
   serializedVersion: 4
@@ -153,7 +154,7 @@ GameObject:
   - component: {fileID: 8463916359107939379}
   m_Layer: 6
   m_Name: BoxCollider
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

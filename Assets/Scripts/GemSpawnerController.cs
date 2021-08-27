@@ -13,7 +13,7 @@ public class GemSpawnerController : MonoBehaviour
     [SerializeField] GemSO[] normalGemsArray = null; //Array of scriptableobjects with normal Gem
     [SerializeField] GemSO[] specialGemsArray = null; //Array of scriptableobjects with special Gems
     public float gemSpacing = 1.5f; //Spacing between gems
-    
+
     // Start is called before the first frame update
     void Start()
     {

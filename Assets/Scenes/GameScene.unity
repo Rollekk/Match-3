@@ -479,7 +479,7 @@ GameObject:
   - component: {fileID: 1279914233}
   m_Layer: 0
   m_Name: BottomPlatform
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -644,7 +644,7 @@ GameObject:
   - component: {fileID: 1497626823}
   m_Layer: 0
   m_Name: GemSpawner
-  m_TagString: Untagged
+  m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -709,6 +709,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ca8c8356acbf50f409f8cb215d085cd5, type: 2}
   - {fileID: 11400000, guid: 6bc0a89158269144386a7c9f910f2732, type: 2}
   - {fileID: 11400000, guid: 19f4e8a3e3dcbd34fb55df69c184b6af, type: 2}
+  - {fileID: 11400000, guid: ca3a7ac0da5825c44ade1499bab7b3f7, type: 2}
+  - {fileID: 11400000, guid: 888e6e73582e2b94bb93fe8967f85c20, type: 2}
   specialGemsArray:
   - {fileID: 11400000, guid: 1b8a2679fa4db0c44b9cd88728dae5de, type: 2}
   - {fileID: 11400000, guid: 7d5d713a0ed6339419d674b055369310, type: 2}

@@ -31,6 +31,7 @@ public class GemController : MonoBehaviour
         {
             GemController otherGem = collision.GetComponent<GemController>();
             if (!sideGems.Contains(otherGem)) sideGems.Add(otherGem);
+            //if (CheckGemNeighbours(this, this) >= 2) DestroyGem(this);
         }
     }
 
@@ -38,27 +39,84 @@ public class GemController : MonoBehaviour
     {
         initialPosition = transform.position;
 
-        //Check if there are any elements in list
-        if (playerManager.selectedGems.Count > 0 )
+        if (type == GemSO.EType.Normal)
         {
-            //Check if first element in list is this one
-            if (playerManager.selectedGems[0] != this) SwapGemsPositions(); //if it's not change positions with other
-            else  //if it's same element remove this one
+            //Check if there are any elements in list
+            if (playerManager.selectedGems.Count > 0)
             {
-                Debug.Log("Remove this gem");
-                playerManager.selectedGems.RemoveAt(0);
+                if (CheckGemNeighbours(playerManager.selectedGems[0], this) >= 2) SwapGemsPositions(); //if it's not change positions with other
+                else playerManager.selectedGems.RemoveAt(0); //if it's same element remove this one
             }
-        }
-        else
-        {
-            //if there are not any elements, add this one
-            Debug.Log("Add new");
-            playerManager.selectedGems.Add(this);
-            CheckColors();
+            else
+            {
+                playerManager.selectedGems.Add(this); //if there are not any elements, add this one
+            }
         }
     }
 
+    private void OnDestroy()
+    {
+        playerManager.AddPointsToPlayer(points);
+    }
+
     #endregion
+
+    //Swap positions of two selected gems
+    void SwapGemsPositions()
+    {
+        Debug.Log("SWAP");
+        //First clicked gemController
+        GemController firstGem = playerManager.selectedGems[0];
+
+        //Check if selected gems are close to eachother
+        if (sideGems.Contains(firstGem))
+        {
+            //if they are swap their positions
+            gameObject.transform.position = firstGem.initialPosition;
+            firstGem.transform.position = initialPosition;
+
+            firstGem.sideGems.Clear();
+            firstGem.sideGems = sideGems;
+            firstGem.sideGems.Add(this);
+            firstGem.sideGems.Remove(firstGem);
+
+            firstGem.DestroyGem(this);
+        }
+        playerManager.selectedGems.Clear();
+    }
+
+    //Check gemToCheck neighbours colors and types
+    //return true if color is the same and type is different than normal
+    //else return false
+    int CheckGemNeighbours(GemController gemToCheck, GemController previosGem)
+    {
+        int counter = 0;
+        foreach (GemController sideGem in sideGems)
+        {
+            if (sideGem.color.Equals(gemToCheck.color) || sideGem.type != GemSO.EType.Normal)
+            {
+                if (sideGem != previosGem)
+                {
+                    counter++;
+                    counter += sideGem.CheckGemNeighbours(this, this);
+                }
+            }
+        }
+        return counter;
+    }
+
+    //Destroy gemToDestroy and all connected gems with same color
+    void DestroyGem(GemController previousGem)
+    {
+        //Add points to player
+        foreach (GemController sideGem in sideGems)
+        {
+            if (sideGem.color.Equals(color) || sideGem.type != GemSO.EType.Normal)
+                if (sideGem != previousGem) sideGem.DestroyGem(this);
+        }
+        if(gameObject) Destroy(gameObject);
+        playerManager.selectedGems.Clear();
+    }
 
     //Update gem stats from scriptableObject
     public void UpdateGemStats()
@@ -68,57 +126,5 @@ public class GemController : MonoBehaviour
         color = gemStats.GetColor;
 
         spriteRenderer.color = color;
-    }
-
-    //Swap positions of two selected gems
-    void SwapGemsPositions()
-    {
-        GemController otherGem = playerManager.selectedGems[0];
-
-        //Check if selected gems are close to eachother
-        if (sideGems.Contains(otherGem))
-        {
-            //if they are swap their positions
-            gameObject.transform.position = otherGem.initialPosition;
-            otherGem.transform.position = initialPosition;
-
-            //clear list to fill it with new sideGems
-            sideGems.Clear();
-            //add swapped gem to list
-            sideGems.Add(otherGem);
-
-            //clear list to fill it with new sideGems
-            otherGem.sideGems.Clear();
-            //add swapped gem to list
-            otherGem.sideGems.Add(this);
-        }
-        playerManager.selectedGems.Clear();
-    }
-
-    //Check side gem colors
-    void CheckColors()
-    {
-        //For each gem in side gems...
-        foreach (GemController sideGem in sideGems)
-        {
-            ////...check if their color equals this gem
-            if (sideGem.color.Equals(this.color))
-            {
-                Destroy(gameObject);
-            }
-        }
-    }
-
-    private void OnDestroy()
-    {
-        playerManager.AddPointsToPlayer(points);
-
-        foreach (GemController sideGem in sideGems)
-        {
-            if (sideGem.color.Equals(this.color))
-                Destroy(sideGem.gameObject);
-            sideGem.sideGems.Remove(this);
-        }
-        playerManager.selectedGems.Clear();
     }
 }
