@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24041e1d4ef46b54eb4dc29c54c2bcb6, type: 3}
   m_Name: Orange
   m_EditorClassIdentifier: 
-  gemPoints: 10
-  gemType: 0
-  gemColor: {r: 0.83137256, g: 0.5607476, b: 0, a: 1}
-  gemSprite: {fileID: 21300000, guid: 8b44249bc5e17374a82fd04f901bb3f5, type: 3}
+  tilePoints: 10
+  tileType: 0
+  tileColor: {r: 1, g: 0.50728744, b: 0, a: 0}
+  tileSprite: {fileID: 21300000, guid: 8b44249bc5e17374a82fd04f901bb3f5, type: 3}

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24041e1d4ef46b54eb4dc29c54c2bcb6, type: 3}
   m_Name: BlackBerry
   m_EditorClassIdentifier: 
-  gemPoints: 10
-  gemType: 0
-  gemColor: {r: 0.42397022, g: 0, b: 1, a: 1}
-  gemSprite: {fileID: 21300000, guid: e936c84dde8a62c42877af4e9af311d7, type: 3}
+  tilePoints: 10
+  tileType: 0
+  tileColor: {r: 0.55522346, g: 0, b: 1, a: 0}
+  tileSprite: {fileID: 21300000, guid: e936c84dde8a62c42877af4e9af311d7, type: 3}
