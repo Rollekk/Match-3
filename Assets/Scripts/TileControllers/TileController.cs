@@ -13,12 +13,12 @@ public class TileController : MonoBehaviour
 
     [Header("Stats")]
     [SerializeField] protected int points; //tile points that will be awarded on destroy
-    [SerializeField] protected Color color; //tile color
+    public Color color; //tile color
     [SerializeField] protected TileSO.EType type; //tile type
     public bool isSwapped = false; //variable needed for not stoping instantiate at spawning two objects at once
 
     [Header("Events")]
-    [SerializeField] public IntGameEvent addPointsEvent;
+    public IntGameEvent addPointsEvent;
 
     #region UnityOverrides
 
