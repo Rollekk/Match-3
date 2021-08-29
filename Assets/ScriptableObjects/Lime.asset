@@ -12,9 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24041e1d4ef46b54eb4dc29c54c2bcb6, type: 3}
   m_Name: Lime
   m_EditorClassIdentifier: 
-  tilePoints: 10
+  tilePoints: 1
   tileType: 0
   tileColor: {r: 0.095341444, g: 1, b: 0, a: 0}
   tileSprite: {fileID: 21300000, guid: de4bc72e82a927c43940b7274e36ea71, type: 3}
-  tileController: {fileID: 0}
-  destroyEvent: {fileID: 11400000, guid: 4745fc5b8151bea4cb3b66dc92884a56, type: 2}

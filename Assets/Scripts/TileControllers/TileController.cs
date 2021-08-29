@@ -78,8 +78,10 @@ public class TileController : MonoBehaviour
                 {
                     //Check if clicked tile is neighbour of first one
                     if (sideTiles.Contains(playerManager.selectedTiles[0]))
+                    {
                         //Do PingPongTween, with two selected tiles
                         PingPongTween(playerManager.selectedTiles[0].spriteRenderer.gameObject, spriteRenderer.gameObject);
+                    }
                     //Deselect tile
                     DeselectTile();
                 }
@@ -87,11 +89,15 @@ public class TileController : MonoBehaviour
             else SelectTile();
         }
     }
+
     #endregion
 
     //Swap positions of two selected tiles
     IEnumerator SwapTilesPositions(TileController firstTile, TileController secondTile)
     {
+        //Change back sprite to normal size
+        LeanTween.scale(secondTile.spriteRenderer.gameObject, new Vector3(0.168f, 0.168f), 0.2f);
+
         //Check if selected tiles are close to eachother
         if (sideTiles.Contains(firstTile) || firstTile == this)
         {
@@ -101,7 +107,8 @@ public class TileController : MonoBehaviour
             //destroy firstTile
             yield return new WaitForSeconds(0.3f);
 
-            firstTile.DestroyTile(new List<TileController>());
+            //Raise event to add points
+            addPointsEvent.Raise(firstTile.DestroyTile(new List<TileController>()) * points);
         }
         secondTile.isSwapped = false;
         //Clear selected tile array
@@ -132,7 +139,7 @@ public class TileController : MonoBehaviour
 
     //Destroy this tile
     //checkedTiles all checked tiles
-    public virtual void DestroyTile(List<TileController> checkedTiles)
+    public virtual int DestroyTile(List<TileController> checkedTiles)
     {
         checkedTiles.Add(this); //add this tile to checked list
 
@@ -147,12 +154,12 @@ public class TileController : MonoBehaviour
             }
             sideTile.sideTiles.Remove(this); //remove this tile from sideTiles arrays
         }
-        //Raise event to add points
-        addPointsEvent.Raise(points);
         //Destroy this gameobject
         if (gameObject) Destroy(gameObject);
         //Clear selected tile array
         playerManager.selectedTiles.Clear();
+
+        return checkedTiles.Count;
     }
 
     //Update tile stats from scriptableObject

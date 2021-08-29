@@ -12,9 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24041e1d4ef46b54eb4dc29c54c2bcb6, type: 3}
   m_Name: Coconut
   m_EditorClassIdentifier: 
-  tilePoints: 10
+  tilePoints: 1
   tileType: 0
   tileColor: {r: 0.3679245, g: 0.28544506, b: 0.23082057, a: 0}
   tileSprite: {fileID: 21300000, guid: 4794df2a37804f5428c429998c4cb803, type: 3}
-  tileController: {fileID: 0}
-  destroyEvent: {fileID: 11400000, guid: 4745fc5b8151bea4cb3b66dc92884a56, type: 2}
