@@ -6,15 +6,21 @@ using UnityEngine.UI;
 public class UIController : MonoBehaviour
 {
     [Header("Components")]
-    Text playerPointsTMP;
+    Text playerPointsText;
+    [SerializeField] Text playerMovesText;
 
     private void Awake()
     {
-        playerPointsTMP = GetComponentInChildren<Text>();
+        playerPointsText = GetComponentInChildren<Text>();
     }
 
     public void UpdatePointsText(int newPointsValue)
     {
-        if(playerPointsTMP) playerPointsTMP.text = newPointsValue.ToString();
+        if(playerPointsText) playerPointsText.text = newPointsValue.ToString();
+    }
+
+    public void UpdateMovesText(int newPointsValue)
+    {
+        if (playerMovesText) playerMovesText.text = newPointsValue.ToString();
     }
 }

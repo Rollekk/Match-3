@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8153455223068105302}
   - component: {fileID: 8153455223068105301}
   - component: {fileID: 8153455223068105300}
+  - component: {fileID: -6755486837734923875}
   m_Layer: 0
   m_Name: PlayerManager
   m_TagString: Untagged
@@ -47,6 +48,7 @@ MonoBehaviour:
   selectedTiles: []
   uiController: {fileID: 0}
   playerPoints: 0
+  playerMoves: 0
 --- !u!114 &8153455223068105300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,6 +68,34 @@ MonoBehaviour:
       - m_Target: {fileID: 8153455223068105301}
         m_TargetAssemblyTypeName: PlayerManager, Assembly-CSharp
         m_MethodName: AddPointsToPlayer
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &-6755486837734923875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8153455223068105303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec44eef0c22c354b9be63f6f137110e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 06a54708bf326984a8879797824547bc, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8153455223068105301}
+        m_TargetAssemblyTypeName: PlayerManager, Assembly-CSharp
+        m_MethodName: AddMovesToPlayer
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

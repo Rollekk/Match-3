@@ -18,7 +18,8 @@ public class TileController : MonoBehaviour
     public bool isSwapped = false; //variable needed for not stoping instantiate at spawning two objects at once
 
     [Header("Events")]
-    public IntGameEvent addPointsEvent; //Event called when tile is destroyed
+    public IntGameEvent addPointsEvent; //Event called to add points to player
+    public IntGameEvent addMovesEvent; //Event called to add points to player
 
     #region UnityOverrides
 
@@ -86,7 +87,6 @@ public class TileController : MonoBehaviour
             else SelectTile();
         }
     }
-
     #endregion
 
     //Swap positions of two selected tiles
@@ -177,6 +177,8 @@ public class TileController : MonoBehaviour
 
         LeanTween.move(firsGO, secondPosition, 0.2f);
         LeanTween.move(secondGO, firstPosition, 0.2f);
+
+        addMovesEvent.Raise(1);
     }
 
     //PingPong two objects between their positions
@@ -189,6 +191,8 @@ public class TileController : MonoBehaviour
 
         LeanTween.move(firsGO, secondPosition, 0.2f).setLoopPingPong(1);
         LeanTween.move(secondGO, firstPosition, 0.2f).setLoopPingPong(1);
+
+        addMovesEvent.Raise(1);
     }
 
     //Remove this tile as selected

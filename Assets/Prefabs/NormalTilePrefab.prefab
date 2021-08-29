@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 3962369188214406138}
   - component: {fileID: 3727563118946414582}
   m_Layer: 6
-  m_Name: TilePrefab
+  m_Name: NormalTilePrefab
   m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41ca9fa9213e32745a980f3aa9bec3fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileStats: {fileID: 0}
+  tileStats: {fileID: 11400000, guid: 6bc0a89158269144386a7c9f910f2732, type: 2}
   playerManager: {fileID: 0}
   sideTiles: []
   points: 0
@@ -137,7 +137,7 @@ MonoBehaviour:
   type: 0
   isSwapped: 0
   addPointsEvent: {fileID: 11400000, guid: 4be663c1e02977a44a7f9e10bf6872c5, type: 2}
-  WhenDestroyed: {fileID: 11400000, guid: 4745fc5b8151bea4cb3b66dc92884a56, type: 2}
+  addMovesEvent: {fileID: 11400000, guid: 06a54708bf326984a8879797824547bc, type: 2}
 --- !u!50 &3962369188214406138
 Rigidbody2D:
   serializedVersion: 4

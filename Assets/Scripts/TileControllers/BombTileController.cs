@@ -34,6 +34,7 @@ public class BombTileController : TileController
             //check if tile that left was in array
             if (sideTiles.Contains(leftTile)) sideTiles.Remove(leftTile); //if true remove that tile
     }
+
     #endregion
 
     public override void UpdateTileStats()

@@ -137,6 +137,7 @@ MonoBehaviour:
   type: 0
   isSwapped: 0
   addPointsEvent: {fileID: 11400000, guid: 4be663c1e02977a44a7f9e10bf6872c5, type: 2}
+  addMovesEvent: {fileID: 11400000, guid: 06a54708bf326984a8879797824547bc, type: 2}
 --- !u!50 &3962369188214406138
 Rigidbody2D:
   serializedVersion: 4
