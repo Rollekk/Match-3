@@ -532,8 +532,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 87.95999, y: -0.9199829}
-  m_SizeDelta: {x: -370.5, y: 23.01}
+  m_AnchoredPosition: {x: 91.87, y: -0.16999817}
+  m_SizeDelta: {x: -362.69, y: 15.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &466469049
 MonoBehaviour:
@@ -1667,6 +1667,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 762392045}
     m_Modifications:
+    - target: {fileID: 1208271929315045369, guid: b7b70207b745586468bdc5776d3f262d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -10.78
+      objectReference: {fileID: 0}
     - target: {fileID: 1208271929667758018, guid: b7b70207b745586468bdc5776d3f262d, type: 3}
       propertyPath: m_Name
       value: TilesSpawner

@@ -103,7 +103,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7b3bd7454a61df429a119af531d79ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileGO: {fileID: 3962369188214406136, guid: 966d93f9215fa884daf5ffef635bc936, type: 3}
+  tileGO:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  randomTileGO: {fileID: 0}
   tileParent: {fileID: 0}
   playerManager: {fileID: 0}
   normalTilesArray:
@@ -113,9 +117,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ca3a7ac0da5825c44ade1499bab7b3f7, type: 2}
   - {fileID: 11400000, guid: 888e6e73582e2b94bb93fe8967f85c20, type: 2}
   - {fileID: 11400000, guid: 6bc0a89158269144386a7c9f910f2732, type: 2}
-  specialTilesArray:
-  - {fileID: 11400000, guid: 7d5d713a0ed6339419d674b055369310, type: 2}
-  - {fileID: 11400000, guid: 1b8a2679fa4db0c44b9cd88728dae5de, type: 2}
+  - {fileID: 11400000, guid: 2a55bcbe6e9a1984c8fd08d09194b1e1, type: 2}
+  - {fileID: 11400000, guid: bbe38fdb9ea08d047bc203f9e5bc8b6f, type: 2}
   tileSpacing: 1.5
   numOfTileColumns: 6
 --- !u!61 &1208271929667758020
