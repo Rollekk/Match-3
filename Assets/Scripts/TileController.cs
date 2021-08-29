@@ -5,17 +5,17 @@ using UnityEngine;
 public class TileController : MonoBehaviour
 {
     [Header("Components")]
-    public TileSO tileStats = null;
-    public PlayerManager playerManager;
+    public TileSO tileStats = null; //ScriptableObject with stats for tile
+    public PlayerManager playerManager = null;
 
     SpriteRenderer spriteRenderer = null;
-    [SerializeField] List<TileController> sideTiles = new List<TileController>();
+    [SerializeField] List<TileController> sideTiles = new List<TileController>(); //list of neighbours of this tile
 
     [Header("Stats")]
-    [SerializeField] private int points;
-    [SerializeField] private Color color;
-    [SerializeField] private TileSO.EType type;
-    [SerializeField] Vector2 initialPosition;
+    [SerializeField] private int points; //tile points that will be awarded on destroy
+    [SerializeField] private Color color; //tile color
+    [SerializeField] private TileSO.EType type; //tile type
+    public bool isSwapped = false; //variable needed for not stoping instantiate at spawning two objects at once
 
     [Header("Events")]
     public GameEvent addPointsEvent;
@@ -61,9 +61,6 @@ public class TileController : MonoBehaviour
     //When tile is clicked
     private void OnMouseDown()
     {
-        //set initial position to current position
-        initialPosition = transform.position;
-
         //check if its type is normal
         if (type == TileSO.EType.Normal)
         {
@@ -104,23 +101,23 @@ public class TileController : MonoBehaviour
         {
             ////Swap their positions
             SwapTween(firstTile.gameObject, gameObject);
-
+            isSwapped = true;
             //destroy firstTile with previous tile as this one
             yield return new WaitForSeconds(0.3f);
-            firstTile.DestroyTile(this);
+            firstTile.DestroyTile(new List<TileController>());
         }
-
+        isSwapped = false;
         //Clear selected tile array
         playerManager.selectedTiles.Clear();
     }
 
-    //Check neigbhours of this tiles
-    //colorToCheck, tile with which color will be checked
-    //previousTile previous checkedTile
-    //return list with all checked tiles
+    //Check neigbhours of this tile
+    //sideCheck, which is used to check its neighbours
+    //checkedTiles all checked tiles
+    //return int, count of found tiles in chain
     int CheckTileNeighbours(TileController sideCheck, List<TileController> checkedTiles)
     {
-        //Add previous tile to list
+        //Add this tile to checked list
         checkedTiles.Add(this);
 
         //go through each side tile
@@ -137,8 +134,11 @@ public class TileController : MonoBehaviour
     }
 
     //Destroy this tile
-    void DestroyTile(TileController previousTile)
+    //checkedTiles all checked tiles
+    void DestroyTile(List<TileController> checkedTiles)
     {
+        checkedTiles.Add(this); //add this tile to checked list
+
         //go through each sideTile in copied array
         foreach (TileController sideTile in sideTiles.ToArray())
         {
@@ -146,10 +146,11 @@ public class TileController : MonoBehaviour
             if (sideTile.color.Equals(color) || sideTile.type != TileSO.EType.Normal)
             {
                 //check if its not previousTile
-                if (sideTile != previousTile) sideTile.DestroyTile(this); //check for other tiles with same color
+                if (!checkedTiles.Contains(sideTile)) sideTile.DestroyTile(checkedTiles); //check for other tiles with same color
             }
             sideTile.sideTiles.Remove(this); //remove this tile from sideTiles arrays
         }
+        //Raise event to add points
         addPointsEvent.Raise(points);
         //Destroy this gameobject
         if (gameObject) Destroy(gameObject);

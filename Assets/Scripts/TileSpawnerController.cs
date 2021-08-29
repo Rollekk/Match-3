@@ -24,8 +24,10 @@ public class TileSpawnerController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        TileController tile = collision.GetComponentInParent<TileController>();
+
         if (collision.CompareTag("Ground"))
-                CreateNewTile(collision.transform.position);
+            if(tile && !tile.isSwapped) CreateNewTile(collision.transform.position);
     }
 
     //Create one new tile

@@ -17,4 +17,9 @@ public class TileSO : ScriptableObject
     public Color GetColor => tileColor;
     public Sprite GetSprite => tileSprite;
 
+
+    private void OnDestroy()
+    {
+        Debug.Log(tileType);
+    }
 }
