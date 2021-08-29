@@ -5,13 +5,13 @@ using UnityEngine;
 public class TileSpawnerController : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] GameObject tileGO; //Tile gameobject to spawn
+    public GameObject[] tileGO; //Tile gameobject to spawn
+    [SerializeField] GameObject randomTileGO;
     [SerializeField] GameObject tileParent; //Tile parent
     public PlayerManager playerManager;
 
     [Header("Tile")]
     [SerializeField] TileSO[] normalTilesArray = null; //Array of scriptableobjects with normal Tile
-    [SerializeField] TileSO[] specialTilesArray = null; //Array of scriptableobjects with special Tiles
 
     [SerializeField] float tileSpacing = 1.5f; //Spacing between tiles
     [SerializeField] int numOfTileColumns = 5; //Number of columns for tiles
@@ -34,28 +34,31 @@ public class TileSpawnerController : MonoBehaviour
     //removedTilePosition position of removed tile in game
     void CreateNewTile(Vector3 removedTilePosition)
     {
+        randomTileGO = GetRandomTile();
         //create new tile with given position and get its controller
-        TileController newTile = Instantiate(tileGO, new Vector3(removedTilePosition.x, transform.position.y, removedTilePosition.z), tileGO.transform.rotation).GetComponentInChildren<TileController>();
+        TileController newTile = Instantiate(randomTileGO, new Vector3(removedTilePosition.x, transform.position.y, removedTilePosition.z), randomTileGO.transform.rotation).GetComponentInChildren<TileController>();
 
         //set newTile transform to new parent
         newTile.transform.parent = tileParent.transform;
-        //get random tileSO from array of ScriptableObjects
-        newTile.tileStats = GetRandomStats();
         //set newTile manager to spawners manager
-        newTile.playerManager = this.playerManager;
+        newTile.playerManager = playerManager;
         //update tileStats
         newTile.UpdateTileStats();
     }
 
     //Get random tileSO from array of ScriptableObjects
     //returns random tileSO
-    TileSO GetRandomStats()
+    GameObject GetRandomTile()
     {
         //random probability of getting special tile
         float randomProb = Random.Range(0f, 100f);
 
         //check probability, return normal or special tile
-        if (randomProb <= 95f) return normalTilesArray[(int)Random.Range(0, normalTilesArray.Length)];
-        else return specialTilesArray[(int)Random.Range(0, specialTilesArray.Length)];
+        if (randomProb <= 95f)
+        {
+            tileGO[0].GetComponent<TileController>().tileStats = normalTilesArray[(int)Random.Range(0, normalTilesArray.Length)];
+            return tileGO[0];
+        }
+        else return tileGO[(int)Random.Range(1, tileGO.Length)];
     }
 }

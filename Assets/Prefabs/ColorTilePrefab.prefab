@@ -71,7 +71,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: af10c36da9657bf4d9383129a4bac673, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 70141d51621e24facbca9196bbde84b4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 3962369188214406138}
   - component: {fileID: 3727563118946414582}
   m_Layer: 6
-  m_Name: TilePrefab
+  m_Name: ColorTilePrefab
   m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -129,13 +129,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41ca9fa9213e32745a980f3aa9bec3fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileStats: {fileID: 0}
+  tileStats: {fileID: 11400000, guid: 7d5d713a0ed6339419d674b055369310, type: 2}
   playerManager: {fileID: 0}
   sideTiles: []
   points: 0
   color: {r: 0, g: 0, b: 0, a: 0}
   type: 0
-  initialPosition: {x: 0, y: 0}
+  isSwapped: 0
   addPointsEvent: {fileID: 11400000, guid: 4be663c1e02977a44a7f9e10bf6872c5, type: 2}
 --- !u!50 &3962369188214406138
 Rigidbody2D:

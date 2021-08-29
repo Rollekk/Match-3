@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "GameEvent", menuName = "ScriptableObjects/GameEvent")]
-public class GameEvent : ScriptableObject
+[CreateAssetMenu(fileName = "IntGameEvent", menuName = "ScriptableObjects/IntGameEvent")]
+public class IntGameEvent : ScriptableObject
 {
-    private readonly List<GameEventListener> eventListeners =
-        new List<GameEventListener>();
+    private readonly List<IntGameEventListener> eventListeners =
+        new List<IntGameEventListener>();
 
     public void Raise(int points)
     {
@@ -14,13 +14,13 @@ public class GameEvent : ScriptableObject
             eventListeners[i].OnEventRaised(points);
     }
 
-    public void RegisterListener(GameEventListener listener)
+    public void RegisterListener(IntGameEventListener listener)
     {
         if (!eventListeners.Contains(listener))
             eventListeners.Add(listener);
     }
 
-    public void UnregisterListener(GameEventListener listener)
+    public void UnregisterListener(IntGameEventListener listener)
     {
         if (eventListeners.Contains(listener))
             eventListeners.Remove(listener);

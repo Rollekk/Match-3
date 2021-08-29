@@ -8,17 +8,17 @@ public class TileController : MonoBehaviour
     public TileSO tileStats = null; //ScriptableObject with stats for tile
     public PlayerManager playerManager = null;
 
-    SpriteRenderer spriteRenderer = null;
-    [SerializeField] List<TileController> sideTiles = new List<TileController>(); //list of neighbours of this tile
+    protected SpriteRenderer spriteRenderer = null;
+    [SerializeField] protected List<TileController> sideTiles = new List<TileController>(); //list of neighbours of this tile
 
     [Header("Stats")]
-    [SerializeField] private int points; //tile points that will be awarded on destroy
-    [SerializeField] private Color color; //tile color
-    [SerializeField] private TileSO.EType type; //tile type
+    [SerializeField] protected int points; //tile points that will be awarded on destroy
+    [SerializeField] protected Color color; //tile color
+    [SerializeField] protected TileSO.EType type; //tile type
     public bool isSwapped = false; //variable needed for not stoping instantiate at spawning two objects at once
 
     [Header("Events")]
-    public GameEvent addPointsEvent;
+    [SerializeField] public IntGameEvent addPointsEvent;
 
     #region UnityOverrides
 
@@ -37,8 +37,6 @@ public class TileController : MonoBehaviour
             TileController otherTile = collision.GetComponent<TileController>();
             //check if array already has this tile, if not add it
             if (!sideTiles.Contains(otherTile)) sideTiles.Add(otherTile);
-            //check if any neighbour has more than 3 (2+self) same color tiles near eachother
-
         }
     }
 
@@ -102,8 +100,9 @@ public class TileController : MonoBehaviour
             ////Swap their positions
             SwapTween(firstTile.gameObject, gameObject);
             isSwapped = true;
-            //destroy firstTile with previous tile as this one
+            //destroy firstTile
             yield return new WaitForSeconds(0.3f);
+            
             firstTile.DestroyTile(new List<TileController>());
         }
         isSwapped = false;
@@ -135,7 +134,7 @@ public class TileController : MonoBehaviour
 
     //Destroy this tile
     //checkedTiles all checked tiles
-    void DestroyTile(List<TileController> checkedTiles)
+    public virtual void DestroyTile(List<TileController> checkedTiles)
     {
         checkedTiles.Add(this); //add this tile to checked list
 
@@ -159,13 +158,14 @@ public class TileController : MonoBehaviour
     }
 
     //Update tile stats from scriptableObject
-    public void UpdateTileStats()
+    public virtual void UpdateTileStats()
     {
         points = tileStats.GetPoints;
         type = tileStats.GetEType;
         color = tileStats.GetColor;
 
         spriteRenderer.sprite = tileStats.GetSprite;
+
     }
 
     #region Tweens

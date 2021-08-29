@@ -10,6 +10,7 @@ public class PlayerManager : MonoBehaviour
 
     [Header("Stats")]
     [SerializeField] int playerPoints;
+
     //Add points to player points
     public void AddPointsToPlayer(int amountOfPoints)
     {

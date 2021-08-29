@@ -16,3 +16,18 @@ MonoBehaviour:
   tileType: 1
   tileColor: {r: 0, g: 0, b: 0, a: 0}
   tileSprite: {fileID: 21300000, guid: f39aceacc2732484182895c9484521a1, type: 3}
+  WhenDestroyed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000}
+        m_TargetAssemblyTypeName: TileSO, Assembly-CSharp
+        m_MethodName: BombDestroy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

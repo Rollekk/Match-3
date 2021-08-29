@@ -3,10 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GameEventListener : MonoBehaviour
+[System.Serializable]
+public class AddPointsEvent : UnityEvent<int>
+{
+
+}
+
+public class IntGameEventListener : MonoBehaviour
 {
     [Tooltip("Event to register with.")]
-    public GameEvent Event;
+    public IntGameEvent Event;
 
     [Tooltip("Response to invoke when Event is raised.")]
     public AddPointsEvent Response;
