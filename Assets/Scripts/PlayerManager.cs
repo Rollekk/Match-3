@@ -25,4 +25,10 @@ public class PlayerManager : MonoBehaviour
         playerMoves += amountOfMoves;
         uiController.UpdateMovesText(playerMoves);
     }
+
+    public void ExitButton()
+    {
+        Application.Quit();
+    }
+
 }
