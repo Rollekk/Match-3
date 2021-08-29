@@ -18,7 +18,7 @@ public class TileController : MonoBehaviour
     public bool isSwapped = false; //variable needed for not stoping instantiate at spawning two objects at once
 
     [Header("Events")]
-    public IntGameEvent addPointsEvent;
+    public IntGameEvent addPointsEvent; //Event called when tile is destroyed
 
     #region UnityOverrides
 
@@ -50,12 +50,6 @@ public class TileController : MonoBehaviour
             if (sideTiles.Contains(leftTile)) sideTiles.Remove(leftTile); //if true remove that tile
     }
 
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    if(collision.collider.CompareTag("Ground"))
-    //        if (CheckTileNeighbours(this, new List<TileController>()) > 2) DestroyTile(this); //if true destroy tiles
-    //}
-
     //When tile is clicked
     private void OnMouseDown()
     {
@@ -65,20 +59,27 @@ public class TileController : MonoBehaviour
             //Check if there are any elements in list
             if (playerManager.selectedTiles.Count > 0)
             {
+                //check if clicked tile is this one
                 if (playerManager.selectedTiles[0] == this)
                 {
+                    //if true then deselect it
                     DeselectTile();
                     return;
                 }
 
-                //check for neighbours, two tiles need to be the same color
+                //check first clicked tile for neigbours with same color
                 if (playerManager.selectedTiles[0].CheckTileNeighbours(this, new List<TileController>()) > 2)
-                    StartCoroutine(SwapTilesPositions()); //change positions
+                    StartCoroutine(SwapTilesPositions(playerManager.selectedTiles[0], this)); //change positions
+                //check second clicked tile for neigbours with same color
+                else if (CheckTileNeighbours(playerManager.selectedTiles[0], new List<TileController>()) > 2)
+                    StartCoroutine(SwapTilesPositions(this, playerManager.selectedTiles[0]));//change positions
                 else
                 {
                     //Check if clicked tile is neighbour of first one
                     if (sideTiles.Contains(playerManager.selectedTiles[0]))
+                        //Do PingPongTween, with two selected tiles
                         PingPongTween(playerManager.selectedTiles[0].spriteRenderer.gameObject, spriteRenderer.gameObject);
+                    //Deselect tile
                     DeselectTile();
                 }
             }
@@ -89,23 +90,20 @@ public class TileController : MonoBehaviour
     #endregion
 
     //Swap positions of two selected tiles
-    IEnumerator SwapTilesPositions()
+    IEnumerator SwapTilesPositions(TileController firstTile, TileController secondTile)
     {
-        //First clicked TileController
-        TileController firstTile = playerManager.selectedTiles[0];
-
         //Check if selected tiles are close to eachother
-        if (sideTiles.Contains(firstTile))
+        if (sideTiles.Contains(firstTile) || firstTile == this)
         {
             ////Swap their positions
-            SwapTween(firstTile.gameObject, gameObject);
-            isSwapped = true;
+            SwapTween(firstTile.gameObject, secondTile.gameObject);
+            secondTile.isSwapped = true;
             //destroy firstTile
             yield return new WaitForSeconds(0.3f);
-            
+
             firstTile.DestroyTile(new List<TileController>());
         }
-        isSwapped = false;
+        secondTile.isSwapped = false;
         //Clear selected tile array
         playerManager.selectedTiles.Clear();
     }
