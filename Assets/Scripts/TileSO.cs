@@ -16,4 +16,5 @@ public class TileSO : ScriptableObject
     public EType GetEType => tileType;
     public Color GetColor => tileColor;
     public Sprite GetSprite => tileSprite;
+
 }

@@ -7,7 +7,7 @@ public class TileSpawnerController : MonoBehaviour
     [Header("Components")]
     [SerializeField] GameObject tileGO; //Tile gameobject to spawn
     [SerializeField] GameObject tileParent; //Tile parent
-    public PlayerManager playerManager; 
+    public PlayerManager playerManager;
 
     [Header("Tile")]
     [SerializeField] TileSO[] normalTilesArray = null; //Array of scriptableobjects with normal Tile
@@ -19,31 +19,13 @@ public class TileSpawnerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < numOfTileColumns; i++) CreateFirstTileRow(i);
+        for (int i = 0; i < numOfTileColumns; i++) CreateNewTile(transform.position + new Vector3(i * tileSpacing, 0.0f, 0.0f));
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Tile")) CreateNewTile(collision.transform.position);
-    }
-
-    //Create first row of tile
-    //i is number of created tiles needed for spacing
-    void CreateFirstTileRow(int i)
-    {
-        //create new tile with correct offset and get its controller
-        TileController newTile = Instantiate(tileGO, transform.position + new Vector3(i * tileSpacing, 0.0f, 0.0f), tileGO.transform.rotation).GetComponent<TileController>();
-
-        //set newTile transform to new parent
-        newTile.transform.parent = tileParent.transform;
-
-        //get random tileSO from array of ScriptableObjects
-        newTile.tileStats = GetRandomStats();
-
-        //set newTile manager to spawners manager
-        newTile.playerManager = this.playerManager;
-        //update tile stats
-        newTile.UpdateTileStats();
+        if (collision.CompareTag("Ground"))
+                CreateNewTile(collision.transform.position);
     }
 
     //Create one new tile

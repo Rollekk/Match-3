@@ -1,18 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [Header("Components")]
+    Text playerPointsTMP;
+
+    private void Awake()
     {
-        
+        playerPointsTMP = GetComponentInChildren<Text>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UpdatePointsText(int newPointsValue)
     {
-        
+        if(playerPointsTMP) playerPointsTMP.text = newPointsValue.ToString();
     }
 }
