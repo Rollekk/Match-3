@@ -27,11 +27,13 @@ public class PlayerManager : MonoBehaviour
         uiController.UpdateMovesText(playerMoves);
     }
 
+    //Quit application
     public void ExitButton()
     {
         Application.Quit();
     }
 
+    //Reload scene
     public void ResetButton()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);

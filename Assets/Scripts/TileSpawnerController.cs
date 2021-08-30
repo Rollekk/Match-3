@@ -6,31 +6,32 @@ public class TileSpawnerController : MonoBehaviour
 {
     [Header("Components")]
     public GameObject[] tileGO; //Tile gameobject to spawn
-    [SerializeField] GameObject randomTileGO;
-    [SerializeField] GameObject tileParent; //Tile parent
     public PlayerManager playerManager;
+    [SerializeField] GameObject randomTileGO; //random tile that will be spawned
+    [SerializeField] GameObject tileSpawnParent; //Parent for tiles to spawn in 
 
     [Header("Tile")]
     [SerializeField] TileSO[] normalTilesArray = null; //Array of scriptableobjects with normal Tile
-
     [SerializeField] float tileSpacing = 1.5f; //Spacing between tiles
     [SerializeField] int numOfTileColumns = 5; //Number of columns for tiles
 
     // Start is called before the first frame update
     void Start()
     {
+        //Create numOfTileColumns of new tiles
         for (int i = 0; i < numOfTileColumns; i++) CreateNewTile(transform.position + new Vector3(i * tileSpacing, 0.0f, 0.0f));
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        TileController tile = collision.GetComponentInParent<TileController>();
+        TileController tile = collision.GetComponentInParent<TileController>(); //Get TileController from colliding object
 
         if (collision.CompareTag("Ground"))
+            //check if there is tile and if its being swapped
             if(tile && !tile.isSwapped) CreateNewTile(collision.transform.position);
     }
 
-    //Create one new tile
+    //Create new tile
     //removedTilePosition position of removed tile in game
     void CreateNewTile(Vector3 removedTilePosition)
     {
@@ -39,7 +40,7 @@ public class TileSpawnerController : MonoBehaviour
         TileController newTile = Instantiate(randomTileGO, new Vector3(removedTilePosition.x, transform.position.y, removedTilePosition.z), randomTileGO.transform.rotation).GetComponentInChildren<TileController>();
 
         //set newTile transform to new parent
-        newTile.transform.parent = tileParent.transform;
+        newTile.transform.parent = tileSpawnParent.transform;
         //set newTile manager to spawners manager
         newTile.playerManager = playerManager;
         //update tileStats

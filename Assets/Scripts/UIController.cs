@@ -11,8 +11,8 @@ public class UIController : MonoBehaviour
     [SerializeField] Text plusText;
 
     [Header("Stats")]
-    Vector3 plusTextPos;
-    int plusPoints = 0;
+    Vector3 plusTextPos; //initial plusText position
+    int plusPoints = 0; //number of plus points to show
 
     private void Awake()
     {

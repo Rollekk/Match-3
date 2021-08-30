@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class BombTileController : TileController
 {
-    //DestroyTile override from TileController
+    protected override void OnMouseDown()
+    {
+        if (playerManager.selectedTiles.Count > 0) playerManager.selectedTiles[0].DeselectTile(); 
+    }
+
+    //Destroy tile
+    //checkedTiles list with all already checked tiles
+    //returns number of destroyed tiles
     public override int DestroyTile(List<TileController> checkedTiles)
     {
         //go through each sideTile

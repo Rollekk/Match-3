@@ -8,14 +8,14 @@ public class TileController : MonoBehaviour
     public TileSO tileStats = null; //ScriptableObject with stats for tile
     public PlayerManager playerManager = null;
 
-    protected SpriteRenderer spriteRenderer = null;
-    [SerializeField] protected List<TileController> sideTiles = new List<TileController>(); //list of neighbours of this tile
+    SpriteRenderer spriteRenderer = null;
+    public List<TileController> sideTiles = new List<TileController>(); //list of neighbours of this tile
 
     [Header("Stats")]
-    [SerializeField] protected int points; //tile points that will be awarded on destroy
+    protected int points; //tile points that will be awarded on destroy
     public Color color; //tile color
-    [SerializeField] protected TileSO.EType type; //tile type
-    public bool isSwapped = false; //variable needed for not stoping instantiate at spawning two objects at once
+    [SerializeField] TileSO.EType type; //tile type
+    public bool isSwapped = false; //is cube swapped with another, used for not spawning additional fruit on top
 
     [Header("Events")]
     public IntGameEvent addPointsEvent; //Event called to add points to player
@@ -52,47 +52,32 @@ public class TileController : MonoBehaviour
     }
 
     //When tile is clicked
-    private void OnMouseDown()
+    protected virtual void OnMouseDown()
     {
-        //check if its type is normal
-        if (type == TileSO.EType.Normal)
+        //Check if there are any elements in list
+        if (playerManager.selectedTiles.Count > 0)
         {
-            //Check if there are any elements in list
-            if (playerManager.selectedTiles.Count > 0)
+            //Check if clicked tile is neighbour of first one
+            if (sideTiles.Contains(playerManager.selectedTiles[0]))
             {
-                //check if clicked tile is this one
-                if (playerManager.selectedTiles[0] == this)
-                {
-                    //if true then deselect it
-                    DeselectTile();
-                    return;
-                }
-
                 //check first clicked tile for neigbours with same color
                 if (playerManager.selectedTiles[0].CheckTileNeighbours(this, new List<TileController>()) > 2)
                     StartCoroutine(SwapTilesPositions(playerManager.selectedTiles[0], this)); //change positions
                 //check second clicked tile for neigbours with same color
                 else if (CheckTileNeighbours(playerManager.selectedTiles[0], new List<TileController>()) > 2)
                     StartCoroutine(SwapTilesPositions(this, playerManager.selectedTiles[0]));//change positions
-                else
-                {
-                    //Check if clicked tile is neighbour of first one
-                    if (sideTiles.Contains(playerManager.selectedTiles[0]))
-                    {
-                        //Do PingPongTween, with two selected tiles
-                        PingPongTween(playerManager.selectedTiles[0].spriteRenderer.gameObject, spriteRenderer.gameObject);
-                    }
-                    //Deselect tile
-                    DeselectTile();
-                }
+                //Do PingPongTween, with two selected tiles  
+                else PingPongTween(playerManager.selectedTiles[0].spriteRenderer.gameObject, spriteRenderer.gameObject);
             }
-            else SelectTile();
+            else DeselectTile();
         }
+        else SelectTile();
     }
 
     #endregion
 
     //Swap positions of two selected tiles
+    //firstTile that will be swapped with second
     IEnumerator SwapTilesPositions(TileController firstTile, TileController secondTile)
     {
         //Change back sprite to normal size
@@ -103,14 +88,14 @@ public class TileController : MonoBehaviour
         {
             ////Swap their positions
             SwapTween(firstTile.gameObject, secondTile.gameObject);
-            secondTile.isSwapped = true;
+            secondTile.isSwapped = true; //set secondTile to the one being swapped
             //destroy firstTile
             yield return new WaitForSeconds(0.3f);
 
             //Raise event to add points
-            addPointsEvent.Raise(firstTile.DestroyTile(new List<TileController>()) * points);
+            addPointsEvent.Raise(firstTile.DestroyTile(new List<TileController>()) * points); //Destroy tile and multiply it with points
         }
-        secondTile.isSwapped = false;
+        secondTile.isSwapped = false; //set secondTile to not being swapped anymore
         //Clear selected tile array
         playerManager.selectedTiles.Clear();
     }
@@ -138,7 +123,8 @@ public class TileController : MonoBehaviour
     }
 
     //Destroy this tile
-    //checkedTiles all checked tiles
+    //checkedTiles list with all already checked tiles
+    //returns number of destroyed tiles
     public virtual int DestroyTile(List<TileController> checkedTiles)
     {
         checkedTiles.Add(this); //add this tile to checked list
@@ -154,6 +140,8 @@ public class TileController : MonoBehaviour
             }
             sideTile.sideTiles.Remove(this); //remove this tile from sideTiles arrays
         }
+        //check if tile was swapped
+        if (isSwapped) isSwapped = false; //set isSwapped to false to spawn new tile
         //Destroy this gameobject
         if (gameObject) Destroy(gameObject);
         //Clear selected tile array
@@ -163,14 +151,13 @@ public class TileController : MonoBehaviour
     }
 
     //Update tile stats from scriptableObject
-    public virtual void UpdateTileStats()
+    public void UpdateTileStats()
     {
         points = tileStats.GetPoints;
         type = tileStats.GetEType;
         color = tileStats.GetColor;
 
         spriteRenderer.sprite = tileStats.GetSprite;
-
     }
 
     #region Tweens
@@ -179,12 +166,15 @@ public class TileController : MonoBehaviour
     //firsGO gameobject that will be swapped with secondGO gameobject
     void SwapTween(GameObject firsGO, GameObject secondGO)
     {
+        //Get both gameobjects positions
         Vector3 firstPosition = firsGO.transform.position;
         Vector3 secondPosition = secondGO.transform.position;
 
+        //Move both gameobjects to different positions
         LeanTween.move(firsGO, secondPosition, 0.2f);
         LeanTween.move(secondGO, firstPosition, 0.2f);
 
+        //Raise event to add playerMoves
         addMovesEvent.Raise(1);
     }
 
@@ -192,18 +182,20 @@ public class TileController : MonoBehaviour
     //firsGO gameobject that will be swapped with secondGO gameobject
     void PingPongTween(GameObject firsGO, GameObject secondGO)
     {
-        //get their positions
+        //Get both gameobjects positions
         Vector3 firstPosition = firsGO.transform.position;
         Vector3 secondPosition = secondGO.transform.position;
 
+        //Move both gameobjects to different positions
         LeanTween.move(firsGO, secondPosition, 0.2f).setLoopPingPong(1);
         LeanTween.move(secondGO, firstPosition, 0.2f).setLoopPingPong(1);
 
+        //Raise event to add playerMoves
         addMovesEvent.Raise(1);
     }
 
-    //Remove this tile as selected
-    void DeselectTile()
+    //Deselect tile that is currently selected
+    public void DeselectTile()
     {
         //Change back sprite to normal size
         LeanTween.scale(playerManager.selectedTiles[0].spriteRenderer.gameObject, new Vector3(0.168f, 0.168f), 0.2f);
