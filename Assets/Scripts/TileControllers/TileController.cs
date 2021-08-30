@@ -68,6 +68,8 @@ public class TileController : MonoBehaviour
                     StartCoroutine(SwapTilesPositions(this, playerManager.selectedTiles[0]));//change positions
                 //Do PingPongTween, with two selected tiles  
                 else PingPongTween(playerManager.selectedTiles[0].spriteRenderer.gameObject, spriteRenderer.gameObject);
+
+                DeselectTile();
             }
             else DeselectTile();
         }
