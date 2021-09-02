@@ -9,10 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24041e1d4ef46b54eb4dc29c54c2bcb6, type: 3}
-  m_Name: ColorPicker
+  m_Script: {fileID: 11500000, guid: 009ef3a390307d84280624dd3cf627a3, type: 3}
+  m_Name: ColorTile
   m_EditorClassIdentifier: 
   tilePoints: 10
   tileType: 2
   tileColor: {r: 1, g: 1, b: 1, a: 0}
   tileSprite: {fileID: 21300000, guid: 30f391484e3d6b949815748761aeeea3, type: 3}
+  addPointsEvent: {fileID: 11400000, guid: 4be663c1e02977a44a7f9e10bf6872c5, type: 2}
+  addMovesEvent: {fileID: 11400000, guid: 06a54708bf326984a8879797824547bc, type: 2}
